@@ -1,0 +1,62 @@
+{
+  "1": {
+    "Prompt": "What is the capital of Italy?",
+    "Options": ["A: Rome", "B: Milan", "C: Venice", "D: Florence"],
+    "Answer": "A"
+  },
+  "2": {
+    "Prompt": "Which ocean is the largest by area?",
+    "Options": ["A: Atlantic", "B: Indian", "C: Arctic", "D: Pacific"],
+    "Answer": "D"
+  },
+  "3": {
+    "Prompt": "Who wrote the play 'Romeo and Juliet'?",
+    "Options": [
+      "A: Charles Dickens",
+      "B: William Shakespeare",
+      "C: Mark Twain",
+      "D: Jane Austen"
+    ],
+    "Answer": "B"
+  },
+  "4": {
+    "Prompt": "What is the smallest planet in our solar system?",
+    "Options": ["A: Mars", "B: Venus", "C: Mercury", "D: Neptune"],
+    "Answer": "C"
+  },
+  "5": {
+    "Prompt": "Which element has the chemical symbol 'O'?",
+    "Options": ["A: Gold", "B: Oxygen", "C: Osmium", "D: Silicon"],
+    "Answer": "B"
+  },
+  "6": {
+    "Prompt": "What is the longest river in the world?",
+    "Options": ["A: Nile", "B: Amazon", "C: Yangtze", "D: Mississippi"],
+    "Answer": "B"
+  },
+  "7": {
+    "Prompt": "Who painted the 'Mona Lisa'?",
+    "Options": [
+      "A: Michelangelo",
+      "B: Vincent van Gogh",
+      "C: Pablo Picasso",
+      "D: Leonardo da Vinci"
+    ],
+    "Answer": "D"
+  },
+  "8": {
+    "Prompt": "Which country hosted the 2020 Summer Olympics (held in 2021)?",
+    "Options": ["A: Brazil", "B: Japan", "C: China", "D: United States"],
+    "Answer": "B"
+  },
+  "9": {
+    "Prompt": "What is the chemical formula for water?",
+    "Options": ["A: H2O", "B: CO2", "C: NaCl", "D: O2"],
+    "Answer": "A"
+  },
+  "10": {
+    "Prompt": "Which country is famous for the Eiffel Tower?",
+    "Options": ["A: Germany", "B: Spain", "C: France", "D: Italy"],
+    "Answer": "C"
+  }
+}

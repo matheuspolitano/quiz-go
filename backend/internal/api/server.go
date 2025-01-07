@@ -26,7 +26,8 @@ func New(config config.Config) *Server {
 
 // WithRoutes implement the routes
 func (svc *Server) WithRoutes() *Server {
-	svc.router.GET("/ping", func(ctx *gin.Context) {
+	apiGroup := svc.router.Group("/api")
+	apiGroup.GET("/ping", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusAccepted, gin.H{
 			"message": "pong",
 		})

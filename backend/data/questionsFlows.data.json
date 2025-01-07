@@ -1,0 +1,29 @@
+{
+  "UP1:1": {
+    "id": "UP1:1",
+    "user_id": "UP1",
+    "question_id": "1",
+    "history": ["H1", "H2"],
+    "created_at": "2023-10-01T10:00:00Z",
+    "closed_at": "2023-10-01T10:15:00Z",
+    "accuracy_rate": 100
+  },
+  "UP1:2": {
+    "id": "UP1:2",
+    "user_id": "UP1",
+    "question_id": "2",
+    "history": ["H3"],
+    "created_at": "2023-10-01T10:20:00Z",
+    "closed_at": "",
+    "accuracy_rate": 0
+  },
+  "UP2:3": {
+    "id": "UP2:3",
+    "user_id": "UP2",
+    "question_id": "3",
+    "history": ["H4"],
+    "created_at": "2023-09-15T08:00:00Z",
+    "closed_at": "2023-09-15T08:05:00Z",
+    "accuracy_rate": 100
+  }
+}
