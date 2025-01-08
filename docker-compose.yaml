@@ -1,0 +1,11 @@
+services:
+  quiz_local:
+    build:
+      context: './backend'
+      dockerfile: Dockerfile
+    environment:
+      - API_PORT=80 # default value
+    ports:
+      - '80:80'
+    volumes:
+      - ./data:/app/data
