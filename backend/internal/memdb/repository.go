@@ -62,7 +62,6 @@ func NewRepositoryDefault[T Identifiable](collectionName string) (*Repository[T]
 
 // createEmptyFile creates an empty JSON file (which starts as an empty array).
 func (r *Repository[T]) createEmptyFile() error {
-	// Make sure directory exists
 	if err := os.MkdirAll(filepath.Dir(r.filePath), os.ModePerm); err != nil {
 		return fmt.Errorf("error creating directories: %s", err.Error())
 	}
@@ -73,7 +72,6 @@ func (r *Repository[T]) createEmptyFile() error {
 	}
 	defer file.Close()
 
-	// Write empty JSON array to start
 	if _, err := file.Write([]byte("[]")); err != nil {
 		return fmt.Errorf("error initializing empty JSON file: %s", err.Error())
 	}
@@ -126,7 +124,6 @@ func (r *Repository[T]) FindByID(id string) (T, error) {
 		return empty, ErrNotFound
 	}
 
-	// Return a copy so external code doesn't accidentally mutate the repository
 	return *entry, nil
 }
 
@@ -145,11 +142,9 @@ func (r *Repository[T]) Save(entity *T) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	// Store a copy to prevent external modifications
 	copied := *entity
 	r.entries[id] = &copied
 
-	// Persist to disk
 	if err := r.saveToFile(); err != nil {
 		return fmt.Errorf("failed to save entity to file: %w", err)
 	}
@@ -165,14 +160,11 @@ func (r *Repository[T]) saveToFile() (err error) {
 		items = append(items, *entry)
 	}
 
-	// Create/Truncate file for writing
 	file, err := os.OpenFile(r.filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0600)
 	if err != nil {
 		return fmt.Errorf("unable to open data file for writing: %s", err.Error())
 	}
 	defer file.Close()
-
-	// Encode to JSON (pretty print for readability)
 	encoder := json.NewEncoder(file)
 	encoder.SetIndent("", "  ")
 	if err := encoder.Encode(items); err != nil {

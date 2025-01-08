@@ -1,29 +1,46 @@
-{
-  "UP1:1": {
+[
+  {
     "id": "UP1:1",
     "user_id": "UP1",
     "question_id": "1",
-    "history": ["H1", "H2"],
+    "history": [
+      "H1",
+      "H2",
+      "44352a66-81c5-444d-80ae-d19f1d99e3e9"
+    ],
     "created_at": "2023-10-01T10:00:00Z",
-    "closed_at": "2023-10-01T10:15:00Z",
-    "accuracy_rate": 100
+    "closed_at": "0001-01-01T00:00:00Z",
+    "accuracy_rate": 0.6666667
   },
-  "UP1:2": {
+  {
     "id": "UP1:2",
     "user_id": "UP1",
     "question_id": "2",
-    "history": ["H3"],
+    "history": [
+      "H3"
+    ],
     "created_at": "2023-10-01T10:20:00Z",
-    "closed_at": "",
+    "closed_at": "0001-01-01T00:00:00Z",
     "accuracy_rate": 0
   },
-  "UP2:3": {
+  {
     "id": "UP2:3",
     "user_id": "UP2",
     "question_id": "3",
-    "history": ["H4"],
+    "history": [
+      "H4"
+    ],
     "created_at": "2023-09-15T08:00:00Z",
     "closed_at": "2023-09-15T08:05:00Z",
     "accuracy_rate": 100
+  },
+  {
+    "id": "",
+    "user_id": "131231213",
+    "question_id": "1",
+    "history": null,
+    "created_at": "2025-01-08T06:51:31.8698181+01:00",
+    "closed_at": "0001-01-01T00:00:00Z",
+    "accuracy_rate": 1
   }
-}
+]

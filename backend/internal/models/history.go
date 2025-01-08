@@ -1,4 +1,4 @@
-package memdb
+package models
 
 import "time"
 
@@ -7,7 +7,7 @@ type History struct {
 	UserID     string    `json:"used_id"`
 	QuestionID string    `json:"question_id"`
 	Answer     string    `json:"answer"`
-	IsRight    string    `json:"is_right"`
+	IsRight    bool      `json:"is_right"`
 	CreatedAt  time.Time `json:"created_at"`
 }
 

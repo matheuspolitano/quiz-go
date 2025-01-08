@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/matheuspolitano/quiz-go/backend/internal/config"
+	"github.com/matheuspolitano/quiz-go/backend/internal/memdb"
 )
 
 // Server api type
@@ -15,6 +16,7 @@ type Server struct {
 	router  *gin.Engine
 	config  config.Config
 	httpSvc *http.Server
+	store   *memdb.DBManager
 }
 
 // New create new server

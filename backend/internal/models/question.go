@@ -1,4 +1,4 @@
-package memdb
+package models
 
 type Question struct {
 	ID      string   `json:"id"` // new field for unique ID
