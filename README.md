@@ -128,7 +128,7 @@ All quiz endpoints (except `POST /api/login`) require a **Bearer** token in the 
 services:
   quiz_local:
     build:
-      context: '.'
+      context: './backend'
       dockerfile: Dockerfile
     environment:
       - API_PORT=80 # default value

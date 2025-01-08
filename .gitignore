@@ -30,8 +30,8 @@ vendor/
 *.log
 
 # Environment variables and sensitive files
-.env
-.env.*
+*/*.env
+*/*.env.*
 
 # Configuration files (generated or containing sensitive data)
 # Adjust these patterns to match your project's config file naming conventions.
