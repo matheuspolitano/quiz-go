@@ -30,8 +30,11 @@ func (db *DBManager) GetScoreUser(userID, quizType string) (*models.QuestionFlow
 	var total float32
 	var length float32
 	for _, item := range allQuestionsFlow {
-		total += float32(item.AccuracyRate)
-		length++
+		if !item.ClosedAt.IsZero() && item.TypeQuizName == questionFlow.TypeQuizName {
+			total += float32(item.AccuracyRate)
+			length++
+		}
+
 	}
 
 	return questionFlow, total / length, nil
