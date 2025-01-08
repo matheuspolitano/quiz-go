@@ -1,7 +1,6 @@
 [
   {
-    "id": "1",
-    "name": "Country Questions",
+    "name": "CountryQuestions",
     "questions_id": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
   }
 ]

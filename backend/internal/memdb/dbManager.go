@@ -11,7 +11,7 @@ type DBManager struct {
 	userProgressRepo  *Repository[*models.User]
 	historyRepo       *Repository[*models.History]
 	questionRepo      *Repository[*models.Question]
-	typeQuestionRepo  *Repository[*models.TypeQuestion]
+	TypeQuizRepo      *Repository[*models.TypeQuiz]
 	questionsFlowRepo *Repository[*models.QuestionFlow]
 
 	globalMu sync.Mutex
@@ -33,7 +33,7 @@ func NewDBManager() (*DBManager, error) {
 		return nil, fmt.Errorf("failed to create question repo: %v", err)
 	}
 
-	typeQuestionRepo, err := NewRepositoryDefault[*models.TypeQuestion]("typeQuestions")
+	TypeQuizRepo, err := NewRepositoryDefault[*models.TypeQuiz]("typesQuiz")
 	if err != nil {
 		return nil, fmt.Errorf("failed to create type question repo: %v", err)
 	}
@@ -47,7 +47,7 @@ func NewDBManager() (*DBManager, error) {
 		userProgressRepo:  userRepo,
 		historyRepo:       historyRepo,
 		questionRepo:      questionRepo,
-		typeQuestionRepo:  typeQuestionRepo,
+		TypeQuizRepo:      TypeQuizRepo,
 		questionsFlowRepo: questionsFlowRepo,
 	}, nil
 }

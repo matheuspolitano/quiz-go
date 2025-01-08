@@ -127,14 +127,22 @@ func (r *Repository[T]) FindByID(id string) (T, error) {
 	return *entry, nil
 }
 
+// ListAll retrieves all items
+func (r *Repository[T]) ListAll() ([]T, error) {
+	r.mu.RLock()
+	defer r.mu.RUnlock()
+
+	var responseList []T
+	for _, item := range r.entries {
+		responseList = append(responseList, *item)
+	}
+	return responseList, nil
+}
+
 // Save adds or updates the entity in the repository.
 // The entity must have a valid ID, otherwise it returns ErrInvalidEntry.
-func (r *Repository[T]) Save(entity *T) error {
-	if entity == nil {
-		return ErrInvalidEntry
-	}
-
-	id := (*entity).GetID()
+func (r *Repository[T]) Save(entity T) error {
+	id := (entity).GetID()
 	if id == "" {
 		return fmt.Errorf("%w: empty ID", ErrInvalidEntry)
 	}
@@ -142,7 +150,7 @@ func (r *Repository[T]) Save(entity *T) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
-	copied := *entity
+	copied := entity
 	r.entries[id] = &copied
 
 	if err := r.saveToFile(); err != nil {

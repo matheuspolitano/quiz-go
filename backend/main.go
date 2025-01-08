@@ -8,6 +8,7 @@ import (
 
 	"github.com/matheuspolitano/quiz-go/backend/internal/api"
 	"github.com/matheuspolitano/quiz-go/backend/internal/config"
+	"github.com/matheuspolitano/quiz-go/backend/internal/memdb"
 )
 
 var interruptSignals = []os.Signal{
@@ -22,7 +23,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	svc := api.New(cfg)
+	store, err := memdb.NewDBManager()
+	if err != nil {
+		log.Fatal(err)
+	}
+	svc := api.New(cfg, store)
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, interruptSignals...)

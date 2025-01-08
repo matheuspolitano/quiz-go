@@ -1,46 +1,21 @@
 [
   {
-    "id": "UP1:1",
-    "user_id": "UP1",
-    "question_id": "1",
+    "user_id": "matheuspolitano2",
+    "type_quiz": "CountryQuestions",
     "history": [
-      "H1",
-      "H2",
-      "44352a66-81c5-444d-80ae-d19f1d99e3e9"
+      "3c78f399-062d-4602-9399-e7a8fc16ceba",
+      "9fa31b31-6148-4ea1-b21a-d869d3697327",
+      "e400f66f-1508-48f7-96c4-9b239ac94df1",
+      "ee8b3902-1316-4f6d-b1be-92f1f85b3033",
+      "d8aef448-e360-4a64-8493-963106dfbbb0",
+      "b075d6b7-2210-436a-a354-37acce5a2a36",
+      "8facf11a-c0b9-4f59-b508-ed6d16d68705",
+      "28437131-0492-4373-833d-d2bbc760795d",
+      "d85463e5-a707-478e-8ec2-cedfccc10074",
+      "9d50db92-5cb2-497f-ac56-b2e9656c93ea"
     ],
-    "created_at": "2023-10-01T10:00:00Z",
-    "closed_at": "0001-01-01T00:00:00Z",
-    "accuracy_rate": 0.6666667
-  },
-  {
-    "id": "UP1:2",
-    "user_id": "UP1",
-    "question_id": "2",
-    "history": [
-      "H3"
-    ],
-    "created_at": "2023-10-01T10:20:00Z",
-    "closed_at": "0001-01-01T00:00:00Z",
-    "accuracy_rate": 0
-  },
-  {
-    "id": "UP2:3",
-    "user_id": "UP2",
-    "question_id": "3",
-    "history": [
-      "H4"
-    ],
-    "created_at": "2023-09-15T08:00:00Z",
-    "closed_at": "2023-09-15T08:05:00Z",
-    "accuracy_rate": 100
-  },
-  {
-    "id": "",
-    "user_id": "131231213",
-    "question_id": "1",
-    "history": null,
-    "created_at": "2025-01-08T06:51:31.8698181+01:00",
-    "closed_at": "0001-01-01T00:00:00Z",
-    "accuracy_rate": 1
+    "created_at": "2025-01-08T10:21:23.1649101+01:00",
+    "closed_at": "2025-01-08T10:25:10.6848278+01:00",
+    "accuracy_rate": 0.3
   }
 ]

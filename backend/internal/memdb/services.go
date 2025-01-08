@@ -12,45 +12,100 @@ import (
 
 var (
 	ErrFlowClosed           = errors.New("question flow is already closed")
+	ErrUsernameAlreadyExist = errors.New("username already exist")
 	ErrNoQuestions          = errors.New("no questions available for this question type")
 	ErrAllQuestionsAnswered = errors.New("all questions have been answered in this flow")
 )
 
-func (db *DBManager) AddQuestionFlow(userID, typeQuestionID string) (*models.QuestionFlow, error) {
+func (db *DBManager) GetScoreUser(userID, quizType string) (*models.QuestionFlow, float32, error) {
+	questionFlow, err := db.questionsFlowRepo.FindByID(utils.CombineIDs(userID, quizType))
+	if err != nil {
+		return nil, 0, err
+	}
+
+	allQuestionsFlow, err := db.questionsFlowRepo.ListAll()
+	if err != nil {
+		return nil, 0, err
+	}
+	var total float32
+	var length float32
+	for _, item := range allQuestionsFlow {
+		total += float32(item.AccuracyRate)
+		length++
+	}
+
+	return questionFlow, total / length, nil
+}
+
+func (db *DBManager) GetQuestion(id string) (*models.Question, error) {
+	question, err := db.questionRepo.FindByID(id)
+	if err != nil {
+		return nil, err
+	}
+	return question, nil
+}
+
+func (db *DBManager) ListAllTypes() ([]*models.TypeQuiz, error) {
+	TypeQuizs, err := db.TypeQuizRepo.ListAll()
+	if err != nil {
+		return nil, err
+	}
+	return TypeQuizs, nil
+}
+
+func (db *DBManager) CreateUser(username string) (*models.User, error) {
+	_, err := db.userProgressRepo.FindByID(username)
+	if err == nil {
+		return nil, ErrUsernameAlreadyExist
+	}
+	user := &models.User{
+		Username:         username,
+		CreatedAt:        time.Now(),
+		QuestionsFlowsID: make([]string, 0),
+	}
+	err = db.userProgressRepo.Save(user)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (db *DBManager) AddQuestionFlow(userID, TypeQuizName string) (*models.QuestionFlow, error) {
 	db.globalMu.Lock()
 	defer db.globalMu.Unlock()
 
-	_, err := db.typeQuestionRepo.FindByID(typeQuestionID)
+	_, err := db.TypeQuizRepo.FindByID(TypeQuizName)
 	if err != nil {
-		return nil, fmt.Errorf("AddQuestionFlow: typeQuestion does not exist: %s", err.Error())
+		return nil, fmt.Errorf("AddQuestionFlow: TypeQuiz does not exist: %s", err.Error())
 	}
 
-	flowID := utils.CombineIDs(userID, typeQuestionID)
+	flowID := utils.CombineIDs(userID, TypeQuizName)
 	_, err = db.questionsFlowRepo.FindByID(flowID)
 	if err == nil {
-		return nil, fmt.Errorf("AddQuestionFlow: question flow already exists for user %s and type %s", userID, typeQuestionID)
+		return nil, fmt.Errorf("AddQuestionFlow: question flow already exists for user %s and type %s", userID, TypeQuizName)
 	}
 	if !errors.Is(err, ErrNotFound) {
 		return nil, err
 	}
 
 	newFlow := &models.QuestionFlow{
-		UserID:         userID,
-		TypeQuestionID: typeQuestionID,
-		CreatedAt:      time.Now(),
-		AccuracyRate:   1.0,
+		UserID:       userID,
+		TypeQuizName: TypeQuizName,
+		CreatedAt:    time.Now(),
+		AccuracyRate: 1.0,
+		ClosedAt:     time.Time{},
+		History:      make([]string, 0),
 	}
-
-	if saveErr := db.questionsFlowRepo.Save(&newFlow); saveErr != nil {
-		return nil, fmt.Errorf("AddQuestionFlow: failed to save new flow: %s", saveErr.Error())
-	}
-
 	user, uErr := db.userProgressRepo.FindByID(userID)
 	if uErr != nil {
 		return nil, fmt.Errorf("AddQuestionFlow: failed to find user: %s", uErr.Error())
 	}
+	if saveErr := db.questionsFlowRepo.Save(newFlow); saveErr != nil {
+		return nil, fmt.Errorf("AddQuestionFlow: failed to save new flow: %s", saveErr.Error())
+	}
+
 	user.QuestionsFlowsID = append(user.QuestionsFlowsID, newFlow.GetID())
-	if saveUserErr := db.userProgressRepo.Save(&user); saveUserErr != nil {
+	if saveUserErr := db.userProgressRepo.Save(user); saveUserErr != nil {
 		return nil, fmt.Errorf("AddQuestionFlow: failed to update user flows: %s", saveUserErr.Error())
 	}
 
@@ -71,9 +126,9 @@ func (db *DBManager) NextQuestion(questionFlowID string) (*models.Question, erro
 	if !qFlow.ClosedAt.IsZero() {
 		return nil, ErrFlowClosed
 	}
-	tQuestion, err := db.typeQuestionRepo.FindByID(qFlow.TypeQuestionID)
+	tQuestion, err := db.TypeQuizRepo.FindByID(qFlow.TypeQuizName)
 	if err != nil {
-		return nil, fmt.Errorf("NextQuestion: typeQuestion not found: %s", err.Error())
+		return nil, fmt.Errorf("NextQuestion: TypeQuiz not found: %s", err.Error())
 	}
 	if len(tQuestion.QuestionsID) == 0 {
 		return nil, ErrNoQuestions
@@ -110,27 +165,27 @@ func (db *DBManager) NextQuestion(questionFlowID string) (*models.Question, erro
 	}
 
 	qFlow.ClosedAt = lastAnswerTime
-	_ = db.questionsFlowRepo.Save(&qFlow)
+	_ = db.questionsFlowRepo.Save(qFlow)
 
 	return nil, ErrAllQuestionsAnswered
 }
 
 // AddAnswer stores an answer for a specific question in the flow.
-func (db *DBManager) AddAnswer(questionFlowID, questionID, userAnswer string) error {
+func (db *DBManager) AddAnswer(questionFlowID, questionID, userAnswer string) (*models.History, error) {
 	db.globalMu.Lock()
 	defer db.globalMu.Unlock()
 
 	qFlow, err := db.questionsFlowRepo.FindByID(questionFlowID)
 	if err != nil {
-		return fmt.Errorf("AddAnswer: question flow not found: %s", err.Error())
+		return nil, fmt.Errorf("AddAnswer: question flow not found: %s", err.Error())
 	}
 	if !qFlow.ClosedAt.IsZero() {
-		return ErrFlowClosed
+		return nil, ErrFlowClosed
 	}
 
-	typeQ, err := db.typeQuestionRepo.FindByID(qFlow.TypeQuestionID)
+	typeQ, err := db.TypeQuizRepo.FindByID(qFlow.TypeQuizName)
 	if err != nil {
-		return fmt.Errorf("AddAnswer: invalid typeQuestion: %s", err.Error())
+		return nil, fmt.Errorf("AddAnswer: invalid TypeQuiz: %s", err.Error())
 	}
 	found := false
 	for _, qID := range typeQ.QuestionsID {
@@ -140,12 +195,25 @@ func (db *DBManager) AddAnswer(questionFlowID, questionID, userAnswer string) er
 		}
 	}
 	if !found {
-		return fmt.Errorf("AddAnswer: question %s not part of typeQuestion %s", questionID, typeQ.ID)
+		return nil, fmt.Errorf("AddAnswer: question %s not part of TypeQuiz %s", questionID, typeQ.Name)
+	}
+
+	answeredQuestionIDs := make(map[string]bool)
+	for _, histID := range qFlow.History {
+		histEntry, hErr := db.historyRepo.FindByID(histID)
+		if hErr != nil {
+			continue
+		}
+		answeredQuestionIDs[histEntry.QuestionID] = true
+	}
+
+	if answeredQuestionIDs[questionID] {
+		return nil, fmt.Errorf("AddAnswer: question already answer. Use the next to get the question without answer")
 	}
 
 	questionObj, err := db.questionRepo.FindByID(questionID)
 	if err != nil {
-		return fmt.Errorf("AddAnswer: cannot find question %s: %w", questionID, err)
+		return nil, fmt.Errorf("AddAnswer: cannot find question %s: %w", questionID, err)
 	}
 
 	newHist := &models.History{
@@ -156,8 +224,8 @@ func (db *DBManager) AddAnswer(questionFlowID, questionID, userAnswer string) er
 		IsRight:    questionObj.Answer == userAnswer,
 		CreatedAt:  time.Now(),
 	}
-	if err := db.historyRepo.Save(&newHist); err != nil {
-		return fmt.Errorf("AddAnswer: failed to save new History: %s", err.Error())
+	if err := db.historyRepo.Save(newHist); err != nil {
+		return nil, fmt.Errorf("AddAnswer: failed to save new History: %s", err.Error())
 	}
 
 	qFlow.History = append(qFlow.History, newHist.ID)
@@ -176,9 +244,9 @@ func (db *DBManager) AddAnswer(questionFlowID, questionID, userAnswer string) er
 		qFlow.AccuracyRate = 1.0
 	}
 
-	if err := db.questionsFlowRepo.Save(&qFlow); err != nil {
-		return fmt.Errorf("AddAnswer: failed to update question flow with new history: %s", err.Error())
+	if err := db.questionsFlowRepo.Save(qFlow); err != nil {
+		return nil, fmt.Errorf("AddAnswer: failed to update question flow with new history: %s", err.Error())
 	}
 
-	return nil
+	return newHist, nil
 }

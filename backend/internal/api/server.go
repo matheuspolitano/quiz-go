@@ -9,20 +9,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/matheuspolitano/quiz-go/backend/internal/config"
 	"github.com/matheuspolitano/quiz-go/backend/internal/memdb"
+	"github.com/matheuspolitano/quiz-go/backend/internal/token"
 )
 
 // Server api type
 type Server struct {
-	router  *gin.Engine
-	config  config.Config
-	httpSvc *http.Server
-	store   *memdb.DBManager
+	router     *gin.Engine
+	config     config.Config
+	httpSvc    *http.Server
+	store      *memdb.DBManager
+	tokenMaker token.Maker
 }
 
 // New create new server
-func New(config config.Config) *Server {
+func New(config config.Config, store *memdb.DBManager) *Server {
 	router := gin.Default()
-	svc := &Server{router: router, config: config}
+	svc := &Server{router: router, config: config, tokenMaker: &token.JWTMaker{}, store: store}
 	return svc.WithRoutes().WithServer()
 }
 
@@ -34,6 +36,20 @@ func (svc *Server) WithRoutes() *Server {
 			"message": "pong",
 		})
 	})
+	apiGroup.POST("/login", svc.startUser)
+	authRoutes := apiGroup.Group("/quiz").Use(authMiddleware(svc.tokenMaker))
+	authRoutes.GET("/ping", func(ctx *gin.Context) {
+		authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+		ctx.JSON(http.StatusAccepted, gin.H{
+			"message": authPayload.Username,
+		})
+	})
+	authRoutes.GET("/types", svc.listAllTypeQuiz)
+	authRoutes.GET("/question/:questionID", svc.getQuestion)
+	authRoutes.GET("/joinQuiz/:typeQuiz", svc.joinQuiz)
+	authRoutes.GET("/answer/:typeQuiz/next", svc.nextQuestion)
+	authRoutes.POST("/answer/:typeQuiz/:questionID", svc.answerQuestion)
+	authRoutes.GET("/answer/:typeQuiz/score", svc.generalScore)
 	return svc
 }
 
