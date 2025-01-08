@@ -220,12 +220,12 @@ func (db *DBManager) AddAnswer(questionFlowID, questionID, userAnswer string) (*
 	}
 
 	newHist := &models.History{
-		ID:         uuid.NewString(),
-		UserID:     qFlow.UserID,
-		QuestionID: questionID,
-		Answer:     userAnswer,
-		IsRight:    questionObj.Answer == userAnswer,
-		CreatedAt:  time.Now(),
+		ID:             uuid.NewString(),
+		UserID:         qFlow.UserID,
+		QuestionID:     questionID,
+		Answer:         userAnswer,
+		ExpectedAnswer: questionObj.Answer,
+		CreatedAt:      time.Now(),
 	}
 	if err := db.historyRepo.Save(newHist); err != nil {
 		return nil, fmt.Errorf("AddAnswer: failed to save new History: %s", err.Error())
@@ -236,7 +236,7 @@ func (db *DBManager) AddAnswer(questionFlowID, questionID, userAnswer string) (*
 	correctCount := 0
 	for _, histID := range qFlow.History {
 		h, herr := db.historyRepo.FindByID(histID)
-		if herr == nil && h.IsRight {
+		if herr == nil && h.ExpectedAnswer == h.Answer {
 			correctCount++
 		}
 	}

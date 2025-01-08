@@ -1,5 +1,24 @@
 [
   {
+    "user_id": "matheuspolitano5",
+    "type_quiz": "CountryQuestions",
+    "history": [
+      "ea60d081-309c-4d8d-bfb4-84a2a9c51b23",
+      "b54e4b9e-f685-47c3-8ab6-54092fbd1d58",
+      "306b8204-e5e6-46ca-a747-2d3c85cd7b94",
+      "f581e0c7-3a57-4d5b-ac28-c2572b07c456",
+      "6e8aa46e-a88e-4ebb-aeab-273cb4d502b8",
+      "d61a413f-eb56-4dcd-b86a-2fdc80406f29",
+      "b263b63a-0140-4376-a34e-804a0c6c75a3",
+      "9e0894de-e316-46bc-892b-a776912beed7",
+      "260608ce-6c79-4000-ab53-0aad3f935040",
+      "f486589d-3bee-4850-a69f-cadae7f0294b"
+    ],
+    "created_at": "2025-01-08T12:07:54.629222+01:00",
+    "closed_at": "2025-01-08T12:08:15.2610341+01:00",
+    "accuracy_rate": 0.3
+  },
+  {
     "user_id": "matheus123",
     "type_quiz": "CountryQuestions",
     "history": [
@@ -17,6 +36,14 @@
     "created_at": "2025-01-08T12:29:31.8175624+01:00",
     "closed_at": "2025-01-08T12:29:45.4531535+01:00",
     "accuracy_rate": 0.4
+  },
+  {
+    "user_id": "1231312",
+    "type_quiz": "CountryQuestions",
+    "history": [],
+    "created_at": "2025-01-08T12:33:50.5276112+01:00",
+    "closed_at": "0001-01-01T00:00:00Z",
+    "accuracy_rate": 1
   },
   {
     "user_id": "adadas",
@@ -39,49 +66,6 @@
     "accuracy_rate": 0
   },
   {
-    "user_id": "asdsadsadaa",
-    "type_quiz": "CountryQuestions",
-    "history": [],
-    "created_at": "2025-01-08T13:13:09.009481577Z",
-    "closed_at": "0001-01-01T00:00:00Z",
-    "accuracy_rate": 1
-  },
-  {
-    "user_id": "matheuspolitano5",
-    "type_quiz": "CountryQuestions",
-    "history": [
-      "ea60d081-309c-4d8d-bfb4-84a2a9c51b23",
-      "b54e4b9e-f685-47c3-8ab6-54092fbd1d58",
-      "306b8204-e5e6-46ca-a747-2d3c85cd7b94",
-      "f581e0c7-3a57-4d5b-ac28-c2572b07c456",
-      "6e8aa46e-a88e-4ebb-aeab-273cb4d502b8",
-      "d61a413f-eb56-4dcd-b86a-2fdc80406f29",
-      "b263b63a-0140-4376-a34e-804a0c6c75a3",
-      "9e0894de-e316-46bc-892b-a776912beed7",
-      "260608ce-6c79-4000-ab53-0aad3f935040",
-      "f486589d-3bee-4850-a69f-cadae7f0294b"
-    ],
-    "created_at": "2025-01-08T12:07:54.629222+01:00",
-    "closed_at": "2025-01-08T12:08:15.2610341+01:00",
-    "accuracy_rate": 0.3
-  },
-  {
-    "user_id": "1231312",
-    "type_quiz": "CountryQuestions",
-    "history": [],
-    "created_at": "2025-01-08T12:33:50.5276112+01:00",
-    "closed_at": "0001-01-01T00:00:00Z",
-    "accuracy_rate": 1
-  },
-  {
-    "user_id": "svsdf",
-    "type_quiz": "CountryQuestions",
-    "history": [],
-    "created_at": "2025-01-08T12:43:52.3454092+01:00",
-    "closed_at": "0001-01-01T00:00:00Z",
-    "accuracy_rate": 1
-  },
-  {
     "user_id": "matheuspolitano2",
     "type_quiz": "CountryQuestions",
     "history": [
@@ -101,6 +85,45 @@
     "accuracy_rate": 0.3
   },
   {
+    "user_id": "svsdf",
+    "type_quiz": "CountryQuestions",
+    "history": [],
+    "created_at": "2025-01-08T12:43:52.3454092+01:00",
+    "closed_at": "0001-01-01T00:00:00Z",
+    "accuracy_rate": 1
+  },
+  {
+    "user_id": "matheuspolitano10",
+    "type_quiz": "CountryQuestions",
+    "history": [
+      "dba8bf96-5031-44d2-bc4d-b19b452b2b5c",
+      "73b4c617-e39b-4f91-ac23-af32533e2cf6",
+      "23b30bbc-3627-4b57-82ea-d69439be2c80",
+      "42dd511d-4805-40a8-bb63-ff1eb3d0925b",
+      "e61d7953-e3ea-495e-82f2-8c41fd0c7f2f",
+      "6f6d0e5f-c6e3-451a-a6ac-5df95ae08636",
+      "3c07ccb1-0d04-4f1b-a94e-1cfaa2ea6c29",
+      "e9c0edca-7f50-4586-875f-a0984fef5309",
+      "186fbab4-5942-4c47-917a-078945f329cf",
+      "25968e7f-28ab-4e55-875e-f921ecd01d7f"
+    ],
+    "created_at": "2025-01-08T18:28:22.828597237Z",
+    "closed_at": "2025-01-08T18:29:33.232874349Z",
+    "accuracy_rate": 0.8
+  },
+  {
+    "user_id": "akdfjalkdjaslk",
+    "type_quiz": "CountryQuestions",
+    "history": [
+      "88c66fa2-94fa-4730-87f9-68f8c011f022",
+      "087c2b8c-bc17-449c-990e-ee1557d81ffa",
+      "a2e972cc-2a96-492a-b445-21659339ea3b"
+    ],
+    "created_at": "2025-01-08T18:36:21.999483553Z",
+    "closed_at": "0001-01-01T00:00:00Z",
+    "accuracy_rate": 0.33333334
+  },
+  {
     "user_id": "matheus123",
     "type_quiz": "WorldCupQuestions",
     "history": [
@@ -118,5 +141,43 @@
     "created_at": "2025-01-08T13:59:38.846881994Z",
     "closed_at": "2025-01-08T13:59:46.571771579Z",
     "accuracy_rate": 0.3
+  },
+  {
+    "user_id": "aksldjaldjalkda",
+    "type_quiz": "WorldCupQuestions",
+    "history": [
+      "0674b9b0-41ea-4048-8b49-d49eb08374fc",
+      "065c0b6f-4162-4949-88fe-8c4d71e1629b",
+      "0afc82c2-a8b2-413c-8e91-441e2536136d",
+      "40d3f477-7428-416d-ab11-3b82971ed735",
+      "04ffdefb-1366-4bc4-becb-25a26d46cb46",
+      "92ed6371-b6f9-49aa-b635-c5263c42e3e0",
+      "765fde97-86c3-4eda-af89-79bbf5bbb775",
+      "66b54ae7-c2ba-48f2-ae40-901cfa32301a",
+      "bcf8dd1d-485e-43fd-a210-4dc5123b025b",
+      "60afa5a9-e56f-430c-8633-d2f94d6e6ae9"
+    ],
+    "created_at": "2025-01-08T14:07:00.998285346Z",
+    "closed_at": "2025-01-08T14:07:09.327198133Z",
+    "accuracy_rate": 0.5
+  },
+  {
+    "user_id": "asdsadsadaa",
+    "type_quiz": "CountryQuestions",
+    "history": [],
+    "created_at": "2025-01-08T13:13:09.009481577Z",
+    "closed_at": "0001-01-01T00:00:00Z",
+    "accuracy_rate": 1
+  },
+  {
+    "user_id": "asdasdasdas",
+    "type_quiz": "CountryQuestions",
+    "history": [
+      "88bd664d-8565-406b-ae79-aa1f91f197fa",
+      "4dc568b4-bd1f-489c-a63c-aa7136156446"
+    ],
+    "created_at": "2025-01-08T18:43:25.750987438Z",
+    "closed_at": "0001-01-01T00:00:00Z",
+    "accuracy_rate": 0.5
   }
 ]

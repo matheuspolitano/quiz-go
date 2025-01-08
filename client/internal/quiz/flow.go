@@ -112,7 +112,8 @@ func questionLoop(reader *bufio.Reader, client *api.Client, quizType string) err
 		}
 
 		// Submit the answer
-		if err := client.SubmitAnswer(quizType, question.ID, answer); err != nil {
+		resultAnswer, err := client.SubmitAnswer(quizType, question.ID, answer)
+		if err != nil {
 			// If "AddAnswer: question already answer", we simply move to the next
 			if strings.Contains(strings.ToLower(err.Error()), "already answer") {
 				color.Yellow("It seems you already answered this question. Moving on...")
@@ -120,8 +121,13 @@ func questionLoop(reader *bufio.Reader, client *api.Client, quizType string) err
 			}
 			return err
 		}
-
 		color.Green("Your answer (%s) was submitted.\n", answer)
+		if resultAnswer.Answer == resultAnswer.ExpectedAnswer {
+			color.Green("Your answer is right :) \n")
+		} else {
+			color.Red("Your answer is wrong :(. The right is (%s) \n", resultAnswer.ExpectedAnswer)
+		}
+
 	}
 }
 

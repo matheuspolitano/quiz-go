@@ -156,34 +156,37 @@ func (c *Client) GetNextQuestion(quizType string) (*models.Question, error) {
 }
 
 // SubmitAnswer sends the user’s answer to the server for a specific question.
-func (c *Client) SubmitAnswer(quizType, questionID, answer string) error {
+func (c *Client) SubmitAnswer(quizType, questionID, answer string) (*models.History, error) {
 	payload := map[string]string{"answer": answer}
 	data, err := json.Marshal(payload)
 	if err != nil {
-		return fmt.Errorf("failed to marshal answer payload: %w", err)
+		return nil, fmt.Errorf("failed to marshal answer payload: %w", err)
 	}
 
 	url := fmt.Sprintf("%s/api/quiz/answer/%s/%s", c.BaseURL, quizType, questionID)
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(data))
 	if err != nil {
-		return fmt.Errorf("creating SubmitAnswer request: %w", err)
+		return nil, fmt.Errorf("creating SubmitAnswer request: %w", err)
 	}
 	c.addAuthHeader(req)
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		return fmt.Errorf("sending SubmitAnswer request: %w", err)
+		return nil, fmt.Errorf("sending SubmitAnswer request: %w", err)
 	}
 	defer resp.Body.Close()
 
 	// Typically expect 202 Accepted if the answer was processed.
 	if resp.StatusCode != http.StatusAccepted {
 		bodyBytes, _ := io.ReadAll(resp.Body)
-		return fmt.Errorf("unexpected status %d: %s", resp.StatusCode, string(bodyBytes))
+		return nil, fmt.Errorf("unexpected status %d: %s", resp.StatusCode, string(bodyBytes))
 	}
-
-	return nil
+	var history models.History
+	if err := json.NewDecoder(resp.Body).Decode(&history); err != nil {
+		return nil, fmt.Errorf("decoding history: %w", err)
+	}
+	return &history, nil
 }
 
 // GetScore retrieves the user’s score for a given quiz type.

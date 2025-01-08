@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 // AccessTokenResponse is the structure we expect when we login successfully.
 type AccessTokenResponse struct {
 	AccessToken string `json:"access_token"`
@@ -30,4 +32,13 @@ type ScoreResponse struct {
 		AccuracyRate float64  `json:"accuracy_rate"`
 	} `json:"user_quiz"`
 	GeneralAccuracyRates float64 `json:"general_accuracy_rates"`
+}
+
+type History struct {
+	ID             string    `json:"id"` // new field for unique ID
+	UserID         string    `json:"used_id"`
+	QuestionID     string    `json:"question_id"`
+	Answer         string    `json:"answer"`
+	ExpectedAnswer string    `json:"expected_answer"`
+	CreatedAt      time.Time `json:"created_at"`
 }
