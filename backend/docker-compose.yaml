@@ -1,5 +1,5 @@
 services:
-  coupon_service_local:
+  quiz_local:
     build:
       context: '.'
       dockerfile: Dockerfile
