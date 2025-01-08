@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -78,32 +79,42 @@ func (r *Repository[T]) createEmptyFile() error {
 	return nil
 }
 
-// loadFromFile reads the slice of T from file, populates r.entries map.
+// loadFromFile reads a slice of T from file and populates r.entries map.
 func (r *Repository[T]) loadFromFile() (err error) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
 	log.Printf("Loading data from '%s'", r.filePath)
 
+	// Ensure the directory exists.
+	dir := filepath.Dir(r.filePath)
+	if _, err = os.Stat(dir); os.IsNotExist(err) {
+		if mkErr := os.MkdirAll(dir, 0755); mkErr != nil {
+			return fmt.Errorf("unable to create directory '%s': %v", dir, mkErr)
+		}
+	} else if err != nil {
+		return fmt.Errorf("error checking directory '%s': %v", dir, err)
+	}
+
 	file, err := os.Open(r.filePath)
 	if err != nil {
 		if os.IsNotExist(err) {
 			if createErr := r.createEmptyFile(); createErr != nil {
-				return fmt.Errorf("unable to create data file: %s", createErr.Error())
+				return fmt.Errorf("unable to create data file: %v", createErr)
 			}
 			return nil
 		}
-		return fmt.Errorf("unable to open data file: %s", err.Error())
+		return fmt.Errorf("unable to open data file: %v", err)
 	}
 	defer file.Close()
 
 	var items []T
 	decoder := json.NewDecoder(file)
 	if decodeErr := decoder.Decode(&items); decodeErr != nil {
-		if decodeErr.Error() == "EOF" {
+		if decodeErr == io.EOF {
 			return nil
 		}
-		return fmt.Errorf("error decoding JSON from file: %s", decodeErr.Error())
+		return fmt.Errorf("error decoding JSON from file: %v", decodeErr)
 	}
 
 	for _, item := range items {

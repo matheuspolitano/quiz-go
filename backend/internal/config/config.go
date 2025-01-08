@@ -19,9 +19,13 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.AutomaticEnv()
 
 	if err = viper.ReadInConfig(); err != nil {
-		return
-	}
 
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+
+			return
+		}
+		err = nil
+	}
 	err = viper.Unmarshal(&config)
 	return
 }

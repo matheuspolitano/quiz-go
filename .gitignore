@@ -1,0 +1,54 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output directories
+/bin/
+/build/
+/tmp/
+/pkg/
+
+# Vendor directory (if using vendor dependencies)
+vendor/
+
+# Go module cache and configuration
+/go.sum
+/go.mod
+
+# IDE or editor specific files
+*.swp
+*.swo
+*.idea/
+*.vscode/
+*.DS_Store
+
+# Log files
+*.log
+
+# Environment variables and sensitive files
+.env
+.env.*
+
+# Configuration files (generated or containing sensitive data)
+# Adjust these patterns to match your project's config file naming conventions.
+# If you want to commit a base config (like config.example.yaml), but ignore actual ones, adapt accordingly.
+config.yaml
+config.yml
+config.json
+config.toml
+
+# Viper specific files
+# If your project stores configuration in a dedicated config directory, you may want to ignore it:
+config/
+
+# Additional temporary files generated during development
+*.tmp
+*.bak
+
+
+#backend data
+/backend/data

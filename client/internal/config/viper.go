@@ -13,20 +13,21 @@ type Config struct {
 // 1) A file named "app.env" in the specified path
 // 2) Environment variables (override file)
 // And unmarshals into the Config struct.
-func LoadConfig(path string) (Config, error) {
-	var cfg Config
+func LoadConfig(path string) (config Config, err error) {
 	viper.AddConfigPath(path)
 	viper.SetConfigName("app")
 	viper.SetConfigType("env")
+
 	viper.AutomaticEnv()
 
-	if err := viper.ReadInConfig(); err != nil {
-		return cfg, err
-	}
+	if err = viper.ReadInConfig(); err != nil {
 
-	if err := viper.Unmarshal(&cfg); err != nil {
-		return cfg, err
-	}
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
 
-	return cfg, nil
+			return
+		}
+		err = nil
+	}
+	err = viper.Unmarshal(&config)
+	return
 }
