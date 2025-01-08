@@ -22,7 +22,6 @@ import (
 func RunQuizFlow(baseURL string) {
 	// Create a new client for the quiz API.
 	client := api.NewClient(baseURL)
-
 	reader := bufio.NewReader(os.Stdin)
 
 	color.Cyan("Welcome to the Quiz CLI!")
@@ -44,42 +43,76 @@ func RunQuizFlow(baseURL string) {
 
 	color.Green("Successfully logged in! Your access token is saved.\n")
 
-	// 2. Retrieve quiz types
-	quizTypes, err := client.GetQuizTypes()
-	if err != nil {
-		color.Red("Unable to fetch quiz types: %v", err)
-		return
-	}
-	if len(quizTypes) == 0 {
-		color.Yellow("No quiz types available.")
-		return
-	}
+	// Outer loop to allow multiple quiz attempts
+	for {
+		// 2. Retrieve quiz types
+		quizTypes, err := client.GetQuizTypes()
+		if err != nil {
+			color.Red("Unable to fetch quiz types: %v", err)
+			return
+		}
+		if len(quizTypes) == 0 {
+			color.Yellow("No quiz types available.")
+			return
+		}
 
-	// 3. Prompt user to select quiz type
-	selectedQuizType, err := promptForQuizType(reader, quizTypes)
-	if err != nil {
-		color.Red("Invalid quiz type selection: %v", err)
-		return
-	}
+		// 3. Prompt user to select quiz type
+		selectedQuizType, err := promptForQuizType(reader, quizTypes)
+		if err != nil {
+			color.Red("Invalid quiz type selection: %v", err)
+			continue
+		}
 
-	// 4. Join the quiz
-	if err := client.JoinQuiz(selectedQuizType); err != nil {
-		color.Red("Cannot join quiz: %v", err)
-		return
-	}
-	color.Green("Joined quiz: %s", selectedQuizType)
+		// 4. Join the quiz
+		if err := client.JoinQuiz(selectedQuizType); err != nil {
+			color.Red("Cannot join quiz: %v", err)
+			continue
+		}
+		color.Green("Joined quiz: %s", selectedQuizType)
 
-	// 5. Question loop
-	err = questionLoop(reader, client, selectedQuizType)
-	if err != nil {
-		color.Red("Error during question flow: %v", err)
-	}
+		// 5. Question loop
+		err = questionLoop(reader, client, selectedQuizType)
+		if err != nil {
+			color.Red("Error during question flow: %v", err)
+		}
 
-	// 6. Fetch final score
-	err = fetchAndDisplayScore(client, selectedQuizType)
-	if err != nil {
-		color.Red("Error fetching final score: %v", err)
-		return
+		// 6. Fetch final score
+		err = fetchAndDisplayScore(client, selectedQuizType)
+		if err != nil {
+			color.Red("Error fetching final score: %v", err)
+			return
+		}
+
+		// 7. Prompt to try another quiz type
+		tryAnother, err := promptForAnotherQuiz(reader)
+		if err != nil {
+			color.Red("Error reading input: %v", err)
+			return
+		}
+		if !tryAnother {
+			color.Cyan("Thank you for playing! Goodbye.")
+			break
+		}
+	}
+}
+
+// promptForAnotherQuiz asks the user if they want to try another quiz type.
+func promptForAnotherQuiz(reader *bufio.Reader) (bool, error) {
+	for {
+		fmt.Print("Do you want to try another quiz type? (Y/N): ")
+		input, err := reader.ReadString('\n')
+		if err != nil {
+			return false, err
+		}
+		input = strings.TrimSpace(strings.ToUpper(input))
+
+		if input == "Y" || input == "YES" {
+			return true, nil
+		} else if input == "N" || input == "NO" {
+			return false, nil
+		} else {
+			fmt.Println("Please answer Y or N.")
+		}
 	}
 }
 

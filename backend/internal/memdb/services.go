@@ -49,11 +49,11 @@ func (db *DBManager) GetQuestion(id string) (*models.Question, error) {
 }
 
 func (db *DBManager) ListAllTypes() ([]*models.TypeQuiz, error) {
-	TypeQuizs, err := db.TypeQuizRepo.ListAll()
+	TypesQuiz, err := db.TypeQuizRepo.ListAll()
 	if err != nil {
 		return nil, err
 	}
-	return TypeQuizs, nil
+	return TypesQuiz, nil
 }
 
 func (db *DBManager) CreateUser(username string) (*models.User, error) {
@@ -83,9 +83,9 @@ func (db *DBManager) AddQuestionFlow(userID, TypeQuizName string) (*models.Quest
 	}
 
 	flowID := utils.CombineIDs(userID, TypeQuizName)
-	_, err = db.questionsFlowRepo.FindByID(flowID)
+	questionFlow, err := db.questionsFlowRepo.FindByID(flowID)
 	if err == nil {
-		return nil, fmt.Errorf("AddQuestionFlow: question flow already exists for user %s and type %s", userID, TypeQuizName)
+		return questionFlow, nil
 	}
 	if !errors.Is(err, ErrNotFound) {
 		return nil, err
