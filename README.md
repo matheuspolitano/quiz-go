@@ -26,7 +26,7 @@ A simple and modular quiz application written in Go, featuring both a CLI client
 **Backend API:**
 
 - User management, quiz retrieval, answer submission, and scoring.
-- Simple file‑based repository (`memdb`) for data persistence.
+- Simple file‑based repository (`memdb`) for data persistence. But the all data is cached
 - JWT-based authentication.
 
 ---
@@ -49,10 +49,10 @@ A simple and modular quiz application written in Go, featuring both a CLI client
 │   │   ├── memdb       # File‑based repository logic
 │   │   ├── models      # Data models
 │   │   └── token       # JWT generation/validation
-│   ├── data            # Persistent JSON files (users, questions, etc.)
 │   ├── Dockerfile
 │   └── go.mod
 │
+├── data            # Persistent JSON files (users, questions, etc.)
 ├── docker-compose.yml  # Docker Compose configuration
 └── README.md
 ```
