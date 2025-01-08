@@ -39,7 +39,7 @@ A simple and modular quiz application written in Go, featuring both a CLI client
 │   ├── cmd             # CLI commands (root, start, etc.)
 │   ├── internal
 │   │   ├── api         # API client calls
-│   │   ├── models      # Data models (QuizType, Question, etc.)
+│   │   ├── models      # Data models (TypeQuiz, Question, the others are generates by the app)
 │   │   └── quiz        # Quiz flow logic
 │   └── main.go         # CLI entry point
 │
