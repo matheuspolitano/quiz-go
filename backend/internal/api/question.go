@@ -23,6 +23,7 @@ func (svc *Server) getQuestion(ctx *gin.Context) {
 	question, err := svc.store.GetQuestion(id)
 	if err != nil {
 		SendError(ctx, "", err.Error(), http.StatusNotFound)
+		return
 	}
 	ctx.JSON(http.StatusAccepted, question)
 }
@@ -33,6 +34,7 @@ func (svc *Server) joinQuiz(ctx *gin.Context) {
 	questionFlow, err := svc.store.AddQuestionFlow(authPayload.Username, typeQuiz)
 	if err != nil {
 		SendError(ctx, "", err.Error(), http.StatusBadRequest)
+		return
 	}
 	ctx.JSON(http.StatusAccepted, questionFlow)
 }
@@ -42,8 +44,9 @@ func (svc *Server) nextQuestion(ctx *gin.Context) {
 	question, err := svc.store.NextQuestion(utils.CombineIDs(authPayload.Username, typeQuiz))
 	if err != nil {
 		SendError(ctx, "", err.Error(), http.StatusNotFound)
+		return
 	}
-	ctx.JSON(http.StatusAccepted, question)
+	ctx.JSON(http.StatusOK, question)
 }
 
 func (svc *Server) generalScore(ctx *gin.Context) {
@@ -52,6 +55,7 @@ func (svc *Server) generalScore(ctx *gin.Context) {
 	question, generalAccuracyRates, err := svc.store.GetScoreUser(authPayload.Username, typeQuiz)
 	if err != nil {
 		SendError(ctx, "", err.Error(), http.StatusNotFound)
+		return
 	}
 	ctx.JSON(http.StatusAccepted, &generalScore{
 		UserQuiz:             question,
@@ -74,6 +78,7 @@ func (svc *Server) answerQuestion(ctx *gin.Context) {
 	history, err := svc.store.AddAnswer(utils.CombineIDs(authPayload.Username, id), questionID, req.Answer)
 	if err != nil {
 		SendError(ctx, "", err.Error(), http.StatusNotFound)
+		return
 	}
 	ctx.JSON(http.StatusAccepted, history)
 }

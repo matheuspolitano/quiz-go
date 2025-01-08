@@ -46,7 +46,7 @@ func (svc *Server) WithRoutes() *Server {
 	})
 	authRoutes.GET("/types", svc.listAllTypeQuiz)
 	authRoutes.GET("/question/:questionID", svc.getQuestion)
-	authRoutes.GET("/joinQuiz/:typeQuiz", svc.joinQuiz)
+	authRoutes.POST("/joinQuiz/:typeQuiz", svc.joinQuiz)
 	authRoutes.GET("/answer/:typeQuiz/next", svc.nextQuestion)
 	authRoutes.POST("/answer/:typeQuiz/:questionID", svc.answerQuestion)
 	authRoutes.GET("/answer/:typeQuiz/score", svc.generalScore)

@@ -1,2 +1,6 @@
 curl -X GET localhost:8081/api/quiz/answer/CountryQuestions/score \
 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg5N2FjZmRlLTFiYTgtNDE0ZC1iNWM0LTY5MzZkOTlkYTg3MiIsInVzZXJuYW1lIjoibWF0aGV1c3BvbGl0YW5vMiIsInJvbGUiOiJyZWd1bGFyIiwiaXNzdWVkX2F0IjoiMjAyNS0wMS0wOFQwODozMDoxOS44ODkxMTQxKzAxOjAwIiwiZXhwaXJlZF9hdCI6IjIwMjYtMDEtMDdUMDg6MzA6MTkuODg5MTE0MSswMTowMCJ9.EQuR4oHOSfoxFka5xiqQFwoHo8XT-8YPxUx14hdRQnE" 
+
+
+## This endpoint will get the score of the user and get the general_accuracy_rates
+## 202 {"user_quiz":{"user_id":"matheuspolitano2","type_quiz":"CountryQuestions","history":["3c78f399-062d-4602-9399-e7a8fc16ceba","9fa31b31-6148-4ea1-b21a-d869d3697327","e400f66f-1508-48f7-96c4-9b239ac94df1","ee8b3902-1316-4f6d-b1be-92f1f85b3033","d8aef448-e360-4a64-8493-963106dfbbb0","b075d6b7-2210-436a-a354-37acce5a2a36","8facf11a-c0b9-4f59-b508-ed6d16d68705","28437131-0492-4373-833d-d2bbc760795d","d85463e5-a707-478e-8ec2-cedfccc10074","9d50db92-5cb2-497f-ac56-b2e9656c93ea"],"created_at":"2025-01-08T10:21:23.1649101+01:00","closed_at":"2025-01-08T10:25:10.6848278+01:00","accuracy_rate":0.3},"general_accuracy_rates":0.15}

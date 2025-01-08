@@ -29,7 +29,7 @@ func (server *Server) startUser(ctx *gin.Context) {
 		return
 	}
 
-	token, _, err := server.tokenMaker.CreateToken(req.Username, "regular", time.Minute*60*24*364)
+	token, _, err := server.tokenMaker.CreateToken(req.Username, "regular", time.Minute*60*24*365)
 	if err != nil {
 		SendError(ctx, "", err.Error(), http.StatusBadRequest)
 		return
@@ -37,6 +37,6 @@ func (server *Server) startUser(ctx *gin.Context) {
 	userResponse := &loginUserResponse{
 		AccessToken: token,
 	}
-	ctx.JSON(http.StatusOK, userResponse)
+	ctx.JSON(http.StatusCreated, userResponse)
 
 }
