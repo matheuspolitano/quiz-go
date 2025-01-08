@@ -68,5 +68,145 @@
     "Prompt": "Which country is famous for the Eiffel Tower?",
     "Options": ["A: Germany", "B: Spain", "C: France", "D: Italy"],
     "Answer": "C"
+  },
+  {
+    "id": "11",
+    "Prompt": "What is the fastest land animal?",
+    "Options": ["A: Cheetah", "B: Lion", "C: Gazelle", "D: Horse"],
+    "Answer": "A"
+  },
+  {
+    "id": "12",
+    "Prompt": "Which animal is known as the 'King of the Jungle'?",
+    "Options": ["A: Tiger", "B: Elephant", "C: Lion", "D: Leopard"],
+    "Answer": "C"
+  },
+  {
+    "id": "13",
+    "Prompt": "What is the largest mammal in the world?",
+    "Options": [
+      "A: Elephant",
+      "B: Blue Whale",
+      "C: Giraffe",
+      "D: Hippopotamus"
+    ],
+    "Answer": "B"
+  },
+  {
+    "id": "14",
+    "Prompt": "Which bird is known for its colorful feathers and ability to mimic sounds?",
+    "Options": ["A: Parrot", "B: Peacock", "C: Flamingo", "D: Owl"],
+    "Answer": "A"
+  },
+  {
+    "id": "15",
+    "Prompt": "What is the only mammal capable of true flight?",
+    "Options": ["A: Flying Squirrel", "B: Bat", "C: Eagle", "D: Pigeon"],
+    "Answer": "B"
+  },
+  {
+    "id": "16",
+    "Prompt": "Which aquatic animal is known for its intelligence and ability to use tools?",
+    "Options": ["A: Octopus", "B: Dolphin", "C: Seal", "D: Shark"],
+    "Answer": "A"
+  },
+  {
+    "id": "17",
+    "Prompt": "What is the tallest land animal?",
+    "Options": ["A: Elephant", "B: Camel", "C: Giraffe", "D: Kangaroo"],
+    "Answer": "C"
+  },
+  {
+    "id": "18",
+    "Prompt": "Which animal is known for playing dead as a defense mechanism?",
+    "Options": ["A: Raccoon", "B: Opossum", "C: Armadillo", "D: Hedgehog"],
+    "Answer": "B"
+  },
+  {
+    "id": "19",
+    "Prompt": "Which animal is known for having a pouch to carry its young?",
+    "Options": ["A: Kangaroo", "B: Panda", "C: Penguin", "D: Chimpanzee"],
+    "Answer": "A"
+  },
+  {
+    "id": "20",
+    "Prompt": "Which animal is the largest species of big cat?",
+    "Options": ["A: Lion", "B: Leopard", "C: Tiger", "D: Cheetah"],
+    "Answer": "C"
+  },
+  {
+    "id": "21",
+    "Prompt": "Which country has won the most FIFA World Cups?",
+    "Options": ["A: Germany", "B: Brazil", "C: Italy", "D: Argentina"],
+    "Answer": "B"
+  },
+  {
+    "id": "22",
+    "Prompt": "In which year was the first FIFA World Cup held?",
+    "Options": ["A: 1928", "B: 1930", "C: 1932", "D: 1934"],
+    "Answer": "B"
+  },
+  {
+    "id": "23",
+    "Prompt": "Which country won the FIFA World Cup in 2018?",
+    "Options": ["A: Brazil", "B: Germany", "C: France", "D: Croatia"],
+    "Answer": "C"
+  },
+  {
+    "id": "24",
+    "Prompt": "Which player has scored the most goals in FIFA World Cup history?",
+    "Options": [
+      "A: Miroslav Klose",
+      "B: Pelé",
+      "C: Ronaldo",
+      "D: Lionel Messi"
+    ],
+    "Answer": "A"
+  },
+  {
+    "id": "25",
+    "Prompt": "Which country hosted the 2002 FIFA World Cup along with South Korea?",
+    "Options": ["A: Japan", "B: China", "C: Australia", "D: Thailand"],
+    "Answer": "A"
+  },
+  {
+    "id": "26",
+    "Prompt": "Which country won the FIFA World Cup in 2006?",
+    "Options": ["A: Italy", "B: France", "C: Germany", "D: Spain"],
+    "Answer": "A"
+  },
+  {
+    "id": "27",
+    "Prompt": "Who is the youngest player to score in a FIFA World Cup final?",
+    "Options": [
+      "A: Pelé",
+      "B: Kylian Mbappé",
+      "C: Diego Maradona",
+      "D: Lionel Messi"
+    ],
+    "Answer": "A"
+  },
+  {
+    "id": "28",
+    "Prompt": "Which country won the FIFA Women's World Cup in 2019?",
+    "Options": ["A: Germany", "B: Japan", "C: United States", "D: Netherlands"],
+    "Answer": "C"
+  },
+  {
+    "id": "29",
+    "Prompt": "Which stadium hosted the final of the 2014 FIFA World Cup?",
+    "Options": ["A: Maracanã", "B: Camp Nou", "C: Wembley", "D: Allianz Arena"],
+    "Answer": "A"
+  },
+  {
+    "id": "30",
+    "Prompt": "Which country will host the FIFA World Cup in 2026?",
+    "Options": [
+      "A: Qatar",
+      "B: Canada, Mexico, and the United States",
+      "C: Australia",
+      "D: Spain"
+    ],
+    "Answer": "B"
   }
 ]
