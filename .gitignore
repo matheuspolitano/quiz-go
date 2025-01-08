@@ -54,6 +54,6 @@ config/
 # Ignore all files in the data folder
 /data/*
 
-# Except files ending with Quiz.data.json and questions.data.json
-!/data/*Quiz.data.json
-!/data/*questions.data.json
+# # Except files ending with Quiz.data.json and questions.data.json
+# !/data/*Quiz.data.json
+# !/data/*questions.data.json
