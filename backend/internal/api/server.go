@@ -6,10 +6,12 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/matheuspolitano/quiz-go/backend/internal/config"
 	"github.com/matheuspolitano/quiz-go/backend/internal/memdb"
 	"github.com/matheuspolitano/quiz-go/backend/internal/token"
+	"go.uber.org/zap"
 )
 
 // Server api type
@@ -22,10 +24,14 @@ type Server struct {
 }
 
 // New create new server
-func New(config config.Config, store *memdb.DBManager) *Server {
-	router := gin.Default()
+func New(config config.Config, store *memdb.DBManager) (*Server, error) {
+	logger, err := zap.NewProduction()
+	if err != nil {
+		return nil, err
+	}
+	router := initializeGinEngine(logger)
 	svc := &Server{router: router, config: config, tokenMaker: &token.JWTMaker{}, store: store}
-	return svc.WithRoutes().WithServer()
+	return svc.WithRoutes().WithServer(), nil
 }
 
 // WithRoutes implement the routes
@@ -80,4 +86,48 @@ func (svc *Server) Shutdown() error {
 		return err
 	}
 	return svc.httpSvc.Shutdown(ctx)
+}
+
+func initializeGinEngine(logger *zap.Logger) *gin.Engine {
+	var router *gin.Engine
+
+	router = gin.New()
+	router.Use(ginLogger(logger), gin.Recovery())
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		AllowCredentials: true,
+		MaxAge:           time.Duration(300) * time.Second,
+	}))
+
+	return router
+}
+
+func ginLogger(logger *zap.Logger) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		start := time.Now()
+		path := c.Request.URL.Path
+		query := c.Request.URL.RawQuery
+
+		c.Next()
+
+		end := time.Now()
+		latency := end.Sub(start)
+
+		if len(c.Errors) > 0 {
+			for _, e := range c.Errors.Errors() {
+				logger.Error(e)
+			}
+		} else {
+			logger.Info("Incoming request",
+				zap.String("method", c.Request.Method),
+				zap.String("path", path),
+				zap.String("query", query),
+				zap.Int("status", c.Writer.Status()),
+				zap.Duration("latency", latency),
+				zap.String("client_ip", c.ClientIP()),
+			)
+		}
+	}
 }

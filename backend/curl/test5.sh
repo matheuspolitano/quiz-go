@@ -8,3 +8,4 @@ curl -X POST localhost:8081/api/quiz/answer/CountryQuestions/1 \
 
 ## If you trie answer two time will ave a error
 ## 400 {"status":"error","error":"AddAnswer: question already answer. Use the next to get the question without answer"}
+
